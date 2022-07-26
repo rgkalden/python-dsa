@@ -1,13 +1,22 @@
 '''
-Graphs with Adjacency Matrix
+Breadth First Search
 
-2D array to store 1/0 to represent presence of an edge between notes
+Traverse a tree or graph data structure one level at a time
 
-square array, # rows = # unique nodes
+Use a queue to keep track of visited nodes
 
-To check an edge: O(1)
-space compelixity: O(V^2)
+Breadth First:
+Traverse level by level
+Utilizes a queue
+Better if destination is on average close to start
+Siblings are visited before children
 
+Depth first:
+Traverse branch by branch
+Utilizes a stack
+Better if destination is on average far from the start
+Children are visited before siblings
+More popular for games/puzzles
 '''
 
 class Node():
@@ -44,6 +53,25 @@ class Graph():
                 print(str(self.matrix[i][j]) + " ", end=" ")
             print("\n")
 
+    def breadthFirstSearch(self, src):
+
+        # src is the starting point
+        
+        queue = []
+        visited = [False for i in range(0, len(self.matrix))]
+
+        queue.append(src)
+        visited[src] = True
+
+        while len(queue) != 0:
+            src = queue.pop(0)
+            print(self.nodes[src].data + " = visited")
+
+            for i in range(0, len(self.matrix[src])):
+                if self.matrix[src][i] == 1 and visited[i] == False:
+                    queue.append(i)
+                    visited[i] = True
+
 
 if __name__ == "__main__":
     graph = Graph(5)
@@ -64,4 +92,4 @@ if __name__ == "__main__":
 
     graph.print()
 
-    print(graph.checkEdge(3, 2))
+    graph.breadthFirstSearch(4)

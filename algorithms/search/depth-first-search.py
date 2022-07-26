@@ -1,14 +1,15 @@
 '''
-Graphs with Adjacency Matrix
+Depth First Search
 
-2D array to store 1/0 to represent presence of an edge between notes
+A search algorithm for traversing a tree or graph data structure
 
-square array, # rows = # unique nodes
+Pick a route, keep going until reach a dead end
+If reach a dead end, or an already visited node,
+backtrack to previous node with unvisited adjacent neighbors
 
-To check an edge: O(1)
-space compelixity: O(V^2)
-
+Use a stack to keep track of visited nodes
 '''
+
 
 class Node():
     def __init__(self, data) -> None:
@@ -44,6 +45,21 @@ class Graph():
                 print(str(self.matrix[i][j]) + " ", end=" ")
             print("\n")
 
+    def depthFirstSearch(self, src):
+        visited = [False for i in range(0, len(self.matrix))]
+        self.dfsHelper(src, visited)
+
+    def dfsHelper(self, src, visited):
+        if visited[src]:
+            return
+        else:
+            visited[src] = True
+            print(self.nodes[src].data + " = visited")
+
+        for i in range(0, len(self.matrix)):
+            if self.matrix[src][i] == 1:
+                self.dfsHelper(i, visited)
+        return
 
 if __name__ == "__main__":
     graph = Graph(5)
@@ -64,4 +80,4 @@ if __name__ == "__main__":
 
     graph.print()
 
-    print(graph.checkEdge(3, 2))
+    graph.depthFirstSearch(4)
